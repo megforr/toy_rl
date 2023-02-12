@@ -2,15 +2,25 @@
 
 ### Environments
 * [Gym](https://gymnasium.farama.org/)
+* [Arcade Learning Environment](https://github.com/mgbellemare/Arcade-Learning-Environment)
 * [OpenSpiel](https://github.com/deepmind/open_spiel)
+* [PyGame](https://www.pygame.org/news)
 * [Stable Baselines Zoo](https://github.com/DLR-RM/rl-baselines3-zoo)
 
 ### Algorithms
 * Tabular Q-learning 
 * Deep Q-Learning (DQN)
+* Policy Gradients
+  * Proximal Policy Optimization (PPO) 
+  * Deep Deterministic Policy Gradient (DDPG)
 * Actor Critic
   * Advantage Actor Critic (A2C)
-* Policy Gradients
-  * Deep Deterministic Policy Gradient (DDPG)
-* MAB
-* CMAB
+  * Soft Actor Critic (SAC)
+* Multi-Arm Bandit (MAB)
+  * Epsilon Greedy
+  * Upper Confidence Bound-1
+  * Thompson Sampling
+  * Best Arm ID - Fixed Confidence
+  * Best Arm ID - Fixed Budget 
+* Contextual MAB (cMAB)
+  * LinUCB
