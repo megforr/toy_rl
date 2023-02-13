@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# TODO: issue installing Box2D https://github.com/cbfinn/gps/issues/34
-
 import numpy as np
 import gymnasium as gym
 import math
