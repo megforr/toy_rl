@@ -24,6 +24,12 @@ import torch.optim as optim
 import torch.nn.functional as F
 import math
 
+# this ensures that the current MacOS version is at least 12.3+
+print(torch.backends.mps.is_available())
+# this ensures that the current current PyTorch installation was built with MPS activated.
+print(torch.backends.mps.is_built())
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu") # Need 12.3+ for mps
+
 # Experience replay buffer
 Transition = namedtuple('Transition',
                         ('state', 'action', 'next_state', 'reward'))
@@ -143,18 +149,20 @@ def optimize_model():
 
 def plot_durations(show_result=False):
     plt.figure(1)
-    durations_t = torch.tensor(episode_durations, dtype=torch.float)
+    #plot_val_t = torch.tensor(episode_durations, dtype=torch.float)
+    plot_val_t = torch.tensor(episodes_reward, dtype=torch.float)
     if show_result:
         plt.title('Result')
     else:
         plt.clf()
         plt.title('Training...')
     plt.xlabel('Episode')
-    plt.ylabel('Duration')
-    plt.plot(durations_t.numpy())
+    #plt.ylabel('Duration')
+    plt.ylabel('Reward')
+    plt.plot(plot_val_t.numpy())
     # Take 100 episode averages and plot them too
-    if len(durations_t) >= 100:
-        means = durations_t.unfold(0, 100, 1).mean(1).view(-1)
+    if len(plot_val_t) >= 100:
+        means = plot_val_t.unfold(0, 100, 1).mean(1).view(-1)
         means = torch.cat((torch.zeros(99), means))
         plt.plot(means.numpy())
 
@@ -169,6 +177,7 @@ def plot_durations(show_result=False):
 
 if __name__ == '__main__':
 
+    #env = gym.make('LunarLander-v2', render_mode='human')
     env = gym.make('LunarLander-v2')
 
     BATCH_SIZE = 128            # Sample size from replay buffer
@@ -197,10 +206,13 @@ if __name__ == '__main__':
                   eps_decay=EPS_DECAY)
 
     episode_durations = []
+    episodes_reward = []
 
-    max_episodes = 50
+    max_episodes = 500
 
     for episode_idx in range(max_episodes):
+
+        episode_reward = 0.0
 
         if episode_idx % 10 == 0:
             print(episode_idx)
@@ -210,6 +222,7 @@ if __name__ == '__main__':
         for t in count():
             action = agent.select_action(state, env, policy_net)
             observation, reward, terminated, truncated, _ = env.step(action.item())
+            episode_reward += reward
             reward = torch.tensor([reward], device=device)
             done = terminated or truncated
 
@@ -239,6 +252,7 @@ if __name__ == '__main__':
 
             if done:
                 episode_durations.append(t + 1)
+                episodes_reward.append(episode_reward)
                 plot_durations()
                 break
 
