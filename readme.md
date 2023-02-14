@@ -10,7 +10,7 @@
 ### Algorithms
 * Tabular Q-learning 
 * Deep Q-Learning (DQN)
-* Policy Gradients
+* Policy Gradients (PG)
   * REINFORCE 
   * Proximal Policy Optimization (PPO) 
   * Deep Deterministic Policy Gradient (DDPG)
