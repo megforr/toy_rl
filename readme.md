@@ -11,6 +11,7 @@
 * Tabular Q-learning 
 * Deep Q-Learning (DQN)
 * Policy Gradients
+  * REINFORCE 
   * Proximal Policy Optimization (PPO) 
   * Deep Deterministic Policy Gradient (DDPG)
 * Actor Critic
