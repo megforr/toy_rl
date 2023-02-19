@@ -12,6 +12,10 @@
 * Deep Q-Learning (DQN)
 * Policy Gradients (PG)
   * REINFORCE 
+    * On-policy Method 
+    * Policy gradient: `$\nabla J ~= E[Q(s,a) \nabla log \pi(a|s)]$`
+      * Scale of gradient is proportional to the value of the action taken: Q(s,a)
+      * The gradient itself is equal to the gradient of the log probability of the action taken.
   * Proximal Policy Optimization (PPO) 
   * Deep Deterministic Policy Gradient (DDPG)
 * Actor Critic
